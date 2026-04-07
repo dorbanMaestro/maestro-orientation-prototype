@@ -2,34 +2,42 @@
 
 /* Tailwind v4: Define custom theme using @theme directive */
 @theme {
-  /* Background colors — matched to Maestro production */
-  --color-bg-primary: #0F1117;
-  --color-bg-surface: #1A1D27;
-  --color-bg-elevated: #242833;
-  --color-bg-hover: #2E3340;
+  /* Background colors — warm dark tones from DESIGN.md */
+  --color-bg-primary: #1A1A1A;
+  --color-bg-surface: #232323;
+  --color-bg-elevated: #2E2E2E;
+  --color-bg-hover: #393937;
+  --color-bg-input: #2E2E2E;
 
   /* Primary accent colors */
   --color-primary: #5558E6;
-  --color-primary-hover: #4f46e5;
-  --color-primary-active: #4338ca;
+  --color-primary-hover: #4547C9;
+  --color-primary-active: #3E40B3;
+  --color-primary-subtle: rgba(85, 88, 230, 0.15);
 
-  /* Success colors */
-  --color-success: #10b981;
+  /* Status colors — from DESIGN.md */
+  --color-success: #34D399;
   --color-success-dark: #059669;
-
-  /* Warning colors */
-  --color-warning: #f59e0b;
+  --color-warning: #FBBF24;
   --color-warning-dark: #d97706;
+  --color-error: #F87171;
+  --color-info: #60A5FA;
 
-  /* Neutral colors */
-  --color-neutral: #6b7280;
-  --color-neutral-dark: #374151;
+  /* Border colors — warm gray from DESIGN.md */
+  --color-border-default: #393937;
+  --color-border-subtle: #2E2E2E;
+  --color-border-strong: #4A4A47;
 
-  /* Text colors */
-  --color-text-primary: #f9fafb;
-  --color-text-secondary: #d1d5db;
-  --color-text-tertiary: #9ca3af;
-  --color-text-disabled: #6b7280;
+  /* Neutral colors (kept for backward compat in Tailwind classes) */
+  --color-neutral: #6B6B65;
+  --color-neutral-dark: #393937;
+
+  /* Text colors — warm off-white from DESIGN.md */
+  --color-text-primary: #ECEBE4;
+  --color-text-secondary: #A8A79F;
+  --color-text-tertiary: #6B6B65;
+  --color-text-disabled: #6B6B65;
+  --color-text-inverse: #0A0A0A;
 }
 
 @layer base {
@@ -43,9 +51,9 @@
   body {
     margin: 0;
     min-height: 100vh;
-    background-color: #0F1117;
-    color: #d1d5db;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #1A1A1A;
+    color: #A8A79F;
+    font-family: 'Wix Madefor Text', system-ui, sans-serif;
   }
 
   * {
@@ -58,16 +66,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #1A1D27;
+    background: #232323;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #374151;
+    background: #393937;
     border-radius: 6px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #4B5563;
+    background: #4A4A47;
   }
 }
 
@@ -88,7 +96,7 @@
   /* Focus visible styles for accessibility */
   .focus-ring:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px #0F1117, 0 0 0 4px var(--color-primary);
+    box-shadow: 0 0 0 2px #1A1A1A, 0 0 0 4px var(--color-primary);
   }
 }
 

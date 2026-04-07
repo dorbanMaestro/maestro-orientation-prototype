@@ -103,12 +103,12 @@ export default function TaskModal({ isOpen, task, onClose, onComplete }) {
             className="fixed inset-0 z-[101] flex items-center justify-center p-6"
           >
             <div
-              className="bg-bg-surface border border-neutral-dark/40 rounded-xl w-full max-w-lg max-h-[85vh] overflow-y-auto relative"
+              className="bg-bg-surface border border-border-default rounded-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto relative"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header — task name + close button */}
-              <div className="sticky top-0 bg-bg-surface border-b border-neutral-dark/30 px-6 py-4 flex items-center justify-between z-10">
-                <h2 className="text-lg font-semibold text-text-primary">{task.name}</h2>
+              <div className="sticky top-0 bg-bg-surface border-b border-border-subtle px-6 py-4 flex items-center justify-between z-10">
+                <h2 className="text-lg font-semibold text-text-primary" style={{ fontFamily: '"Wix Madefor Display", system-ui, sans-serif' }}>{task.name}</h2>
                 <button
                   onClick={onClose}
                   className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-bg-hover text-text-tertiary hover:text-text-primary transition-colors cursor-pointer"
@@ -125,7 +125,7 @@ export default function TaskModal({ isOpen, task, onClose, onComplete }) {
               </div>
 
               {/* Footer — Complete button */}
-              <div className="sticky bottom-0 bg-bg-surface border-t border-neutral-dark/30 px-6 py-4">
+              <div className="sticky bottom-0 bg-bg-surface border-t border-border-subtle px-6 py-4">
                 {isCompleted ? (
                   <div className="flex items-center justify-center gap-2 text-success">
                     <Check size={18} />
@@ -134,7 +134,7 @@ export default function TaskModal({ isOpen, task, onClose, onComplete }) {
                 ) : (
                   <button
                     onClick={() => onComplete?.(task)}
-                    className="w-full py-3 bg-primary hover:bg-primary-active text-white font-medium rounded-lg transition-colors cursor-pointer text-sm"
+                    className="w-full py-3 bg-text-primary hover:opacity-90 text-text-inverse font-medium rounded-full transition-opacity cursor-pointer text-sm"
                   >
                     Mark as Complete
                   </button>

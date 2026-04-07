@@ -49,7 +49,7 @@ export default function UpNextCard({ task, onStart }) {
   const buttonText = task.status === 'in_progress' ? 'Continue' : 'Start';
 
   return (
-    <div className="border border-neutral-dark/40 rounded-md bg-transparent p-6">
+    <div className="border border-border-default rounded-2xl bg-bg-surface p-6">
       {/* Header: small clipboard icon + "Up next" label */}
       <div className="flex items-center gap-2 mb-5">
         <ClipboardList size={16} className="text-text-tertiary" />
@@ -84,7 +84,7 @@ export default function UpNextCard({ task, onStart }) {
         {/* Ghost/outlined button with border — NOT filled */}
         <button
           onClick={() => onStart?.(task)}
-          className="shrink-0 flex items-center gap-1.5 px-5 py-2.5 border border-neutral-dark/60 hover:border-text-tertiary text-text-primary text-sm font-medium rounded-lg transition-colors cursor-pointer bg-transparent"
+          className="shrink-0 flex items-center gap-1.5 px-6 py-2.5 bg-text-primary text-text-inverse text-sm font-medium rounded-full transition-opacity hover:opacity-90 cursor-pointer border-none"
         >
           {buttonText}
           <ArrowRight size={16} />

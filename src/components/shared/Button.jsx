@@ -23,7 +23,7 @@ export default function Button({
 }) {
   // Base styles shared by all variants
   const base =
-    'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 cursor-pointer focus-ring';
+    'inline-flex items-center justify-center gap-2 font-medium rounded-full transition-all duration-200 cursor-pointer focus-ring';
 
   // Size classes
   const sizeClasses = {
@@ -35,11 +35,11 @@ export default function Button({
   // Variant classes — each has normal + hover state
   const variantClasses = {
     primary:
-      'bg-primary text-white hover:bg-primary-hover active:bg-primary-active',
+      'bg-text-primary text-text-inverse hover:opacity-90 active:opacity-80',
     secondary:
-      'bg-transparent text-text-secondary border border-neutral-dark hover:bg-bg-hover hover:text-text-primary',
+      'bg-transparent text-text-primary border border-border-default hover:border-border-strong hover:bg-white/5',
     ghost:
-      'bg-transparent text-text-secondary hover:text-text-primary hover:bg-bg-hover',
+      'bg-transparent text-text-primary hover:bg-white/5',
   };
 
   const widthClass = fullWidth ? 'w-full' : '';

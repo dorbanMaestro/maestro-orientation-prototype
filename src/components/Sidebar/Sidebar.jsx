@@ -45,7 +45,7 @@ export default function Sidebar({
   student = { name: 'Student' },
 }) {
   return (
-    <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-14 bg-bg-surface border-r border-neutral-dark/20 flex-col items-center py-4 z-50">
+    <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-14 bg-bg-surface border-r border-border-subtle flex-col items-center py-4 z-50">
       {/* Top: Maestro logo — purple rounded square with grid icon */}
       <div className="mb-8 w-9 h-9 rounded-lg bg-primary/20 flex items-center justify-center">
         <LayoutGrid size={18} className="text-primary" />

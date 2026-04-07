@@ -15,7 +15,7 @@ export default function GreetingSection({
     <section className="pt-4 pb-8">
       {/* Very large bold heading — matches Maestro ~36-40px */}
       {/* "Welcome" is appropriate for new orientation students (not "Back at it" which implies returning) */}
-      <h1 className="text-4xl font-bold text-text-primary leading-tight tracking-tight">
+      <h1 className="text-4xl font-semibold text-text-primary leading-tight tracking-tight" style={{ fontFamily: '"Wix Madefor Display", system-ui, sans-serif' }}>
         Welcome, {studentName} <span className="inline-block">&#x1F44B;</span>
       </h1>
 

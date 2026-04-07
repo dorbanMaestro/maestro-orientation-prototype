@@ -41,7 +41,7 @@ const PointsBadge = forwardRef(function PointsBadge({ points = 0, animate = fals
   return (
     <motion.div
       ref={ref}
-      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 border border-neutral-dark/50 rounded-full bg-transparent"
+      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 border border-border-default rounded-full bg-transparent"
       // Golden star-burst highlight when diamonds hit (like the game screenshots)
       animate={
         animate

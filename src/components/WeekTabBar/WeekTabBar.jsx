@@ -66,7 +66,7 @@ export default function WeekTabBar({ tabs = [], activeTab, onTabClick }) {
                 border transition-all whitespace-nowrap
                 ${
                   isActive
-                    ? 'border-text-secondary/50 text-text-primary bg-bg-elevated/50'
+                    ? 'border-border-default text-text-primary bg-bg-elevated/50'
                     : isLocked
                       ? 'border-transparent text-text-disabled bg-transparent cursor-not-allowed'
                       : 'border-transparent text-text-tertiary bg-transparent hover:text-text-secondary cursor-pointer'
@@ -83,7 +83,7 @@ export default function WeekTabBar({ tabs = [], activeTab, onTabClick }) {
       {/* Right scroll arrow */}
       <button
         onClick={scrollRight}
-        className="shrink-0 w-9 h-9 flex items-center justify-center rounded-full border border-neutral-dark/40 text-text-tertiary hover:text-text-primary transition-colors cursor-pointer"
+        className="shrink-0 w-9 h-9 flex items-center justify-center rounded-full border border-border-default text-text-tertiary hover:text-text-primary transition-colors cursor-pointer"
         aria-label="Scroll tabs right"
       >
         <ChevronRight size={14} />

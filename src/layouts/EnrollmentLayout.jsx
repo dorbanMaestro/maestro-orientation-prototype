@@ -31,7 +31,7 @@ export default function EnrollmentLayout({
         transition={{ duration: 0.4, ease: 'easeOut' }}
         // "key" forces re-animate when step changes
         key={step}
-        className="w-full max-w-lg bg-bg-surface rounded-2xl p-8 border border-neutral-dark"
+        className="w-full max-w-lg bg-bg-surface rounded-2xl p-8 border border-border-default"
       >
         {/* Step indicator dots */}
         <div className="flex items-center justify-center gap-2 mb-8">

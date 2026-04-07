@@ -49,12 +49,12 @@ export default function OrientationTaskList({
   };
 
   return (
-    <section className="border border-neutral-dark/40 rounded-md">
+    <section className="border border-border-default rounded-2xl bg-bg-surface">
       {/* Section header: icon + "Weekly goals" + progress counter */}
       <div className="px-6 pt-6 pb-4">
         <div className="flex items-center gap-2.5 mb-1">
           <CheckCircle2 size={18} className="text-text-primary" />
-          <h2 className="text-lg font-semibold text-text-primary">Weekly goals</h2>
+          <h2 className="text-lg font-semibold text-text-primary" style={{ fontFamily: '"Wix Madefor Display", system-ui, sans-serif' }}>Weekly goals</h2>
         </div>
 
         {/* Progress counter — subtle gray text below the header */}
@@ -67,7 +67,7 @@ export default function OrientationTaskList({
       </div>
 
       {/* Thin separator line */}
-      <div className="border-t border-neutral-dark/30" />
+      <div className="border-t border-border-default" />
 
       {/* Task rows — inside the bordered container, with dividers between them */}
       <div className="px-6 pb-2">
@@ -82,7 +82,7 @@ export default function OrientationTaskList({
               <OrientationTaskCard task={task} onClick={onTaskClick} />
               {/* Divider between rows (not after last one) */}
               {index < tasks.length - 1 && (
-                <div className="border-t border-neutral-dark/20 ml-15" />
+                <div className="border-t border-border-subtle ml-15" />
               )}
             </motion.div>
           ))}
