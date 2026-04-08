@@ -27,9 +27,17 @@ export default function OrientationTaskList({
   onTabClick,
   onTaskClick,
 }) {
-  // Calculate progress counter from the tasks array
-  const completed = tasks.filter(t => t.status === 'completed').length;
-  const total = tasks.length;
+  // Split tasks into regular and bonus (optional) — production shows these separately
+  const regularTasks = tasks.filter(t => !t.optional);
+  const bonusTasks = tasks.filter(t => t.optional);
+
+  // Calculate progress counter from regular tasks only
+  const completed = regularTasks.filter(t => t.status === 'completed').length;
+  const total = regularTasks.length;
+
+  // Total bonus points available
+  const bonusPointsTotal = bonusTasks.length * 8;
+  const allBonusCompleted = bonusTasks.length > 0 && bonusTasks.every(t => t.status === 'completed');
 
   // Framer Motion variants for staggered animation
   const containerVariants = {
@@ -69,7 +77,7 @@ export default function OrientationTaskList({
       {/* Thin separator line */}
       <div className="border-t border-border-default" />
 
-      {/* Task rows — inside the bordered container, with dividers between them */}
+      {/* Regular task rows */}
       <div className="px-6 pb-2">
         <motion.div
           key={activeTab}
@@ -77,16 +85,56 @@ export default function OrientationTaskList({
           initial="hidden"
           animate="visible"
         >
-          {tasks.map((task, index) => (
+          {regularTasks.map((task, index) => (
             <motion.div key={task.id} variants={cardVariants}>
               <OrientationTaskCard task={task} onClick={onTaskClick} />
               {/* Divider between rows (not after last one) */}
-              {index < tasks.length - 1 && (
+              {index < regularTasks.length - 1 && (
                 <div className="border-t border-border-subtle ml-15" />
               )}
             </motion.div>
           ))}
         </motion.div>
+      </div>
+
+      {/* Bonus section — dashed divider with centered "Bonus" label (production pattern) */}
+      {bonusTasks.length > 0 && (
+        <div className="px-6 pb-2">
+          {/* Dashed divider with "Bonus" label */}
+          <div className="relative my-3">
+            <div className="border-t border-dashed border-border-default" />
+            <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-bg-surface px-3 text-xs font-medium text-text-tertiary">
+              Bonus
+            </span>
+          </div>
+
+          {/* Bonus task rows */}
+          <motion.div variants={containerVariants} initial="hidden" animate="visible">
+            {bonusTasks.map((task, index) => (
+              <motion.div key={task.id} variants={cardVariants}>
+                <OrientationTaskCard task={task} onClick={onTaskClick} />
+                {index < bonusTasks.length - 1 && (
+                  <div className="border-t border-border-subtle ml-15" />
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* "Complete all to unlock" locked row (if bonus tasks not all done) */}
+          {!allBonusCompleted && bonusTasks.length > 0 && (
+            <div className="flex items-center justify-center gap-2 py-3 mt-1 rounded-lg bg-bg-elevated/50 text-text-tertiary text-sm">
+              <span>Complete all to unlock</span>
+              <span className="text-warning font-medium">+{bonusPointsTotal} &#x25C6;</span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Points multiplier bar — footer incentive (production pattern) */}
+      <div className="bg-bg-elevated rounded-b-2xl px-4 py-3 flex items-center justify-center gap-2 text-sm text-text-secondary">
+        <span className="text-warning font-semibold">x2</span>
+        <span className="text-warning">&#x25C6;</span>
+        <span>Points multiplier this week</span>
       </div>
     </section>
   );

@@ -96,13 +96,14 @@ export default function OrientationTaskCard({
         ${isLocked ? 'opacity-35 cursor-not-allowed' : ''}
       `}
     >
-      {/* Left: Rounded square icon — 44px, dark bg */}
+      {/* Left: Circular icon — 44px, dark bg (production uses circles, not rounded squares) */}
       <div
         className={`
-          w-11 h-11 rounded-lg flex items-center justify-center shrink-0
+          w-11 h-11 rounded-full flex items-center justify-center shrink-0
           ${isCompleted ? 'bg-primary/15' : 'bg-bg-elevated'}
         `}
       >
+        {/* Completed: checkmark replaces original icon inside the circle */}
         {isCompleted ? (
           <Check size={20} className="text-primary" />
         ) : (
@@ -144,17 +145,11 @@ export default function OrientationTaskCard({
         <SegmentedProgressBar status={task.status} />
       </div>
 
-      {/* Right: Points with diamond symbol */}
+      {/* Right: Points with diamond symbol (production shows points for all states, no separate green check) */}
       <div className="shrink-0 flex items-center">
-        {isCompleted ? (
-          <div className="w-6 h-6 rounded-full bg-success/15 flex items-center justify-center">
-            <Check size={14} className="text-success" />
-          </div>
-        ) : (
-          <span className="text-sm text-text-tertiary flex items-center gap-1">
-            {taskPoints} <span className="text-warning">&#x25C6;</span>
-          </span>
-        )}
+        <span className={`text-sm flex items-center gap-1 ${isCompleted ? 'text-text-tertiary/50' : 'text-text-tertiary'}`}>
+          {taskPoints} <span className="text-warning">&#x25C6;</span>
+        </span>
       </div>
     </button>
   );

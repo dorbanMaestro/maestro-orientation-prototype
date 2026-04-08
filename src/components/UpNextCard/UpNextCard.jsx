@@ -60,8 +60,8 @@ export default function UpNextCard({ task, onStart }) {
 
       {/* Content row: icon square | text info | ghost button */}
       <div className="flex items-center gap-4">
-        {/* Rounded square icon — 48px, dark bg */}
-        <div className="w-12 h-12 rounded-lg bg-bg-elevated flex items-center justify-center shrink-0">
+        {/* Circular icon — 48px, dark bg (production uses circles) */}
+        <div className="w-12 h-12 rounded-full bg-bg-elevated flex items-center justify-center shrink-0">
           <TaskIcon size={22} className="text-text-primary" />
         </div>
 
@@ -81,10 +81,10 @@ export default function UpNextCard({ task, onStart }) {
           </p>
         </div>
 
-        {/* Ghost/outlined button with border — NOT filled */}
+        {/* Outlined/secondary button — matches production (NOT solid fill) */}
         <button
           onClick={() => onStart?.(task)}
-          className="shrink-0 flex items-center gap-1.5 px-6 py-2.5 bg-text-primary text-text-inverse text-sm font-medium rounded-full transition-opacity hover:opacity-90 cursor-pointer border-none"
+          className="shrink-0 flex items-center gap-1.5 px-6 py-2.5 bg-transparent text-text-primary text-sm font-medium rounded-full transition-all hover:border-border-strong hover:bg-white/5 cursor-pointer border border-border-default"
         >
           {buttonText}
           <ArrowRight size={16} />

@@ -1,17 +1,18 @@
 # Maestro Design System
 
-> Extracted from maestro.org on 2026-04-07. Dark-first, warm, approachable education platform.
+> Extracted from maestro.org on 2026-04-07. Updated from production app screenshots on 2026-04-07.
+> Dark-first, warm, approachable education platform.
 
 ## Brand Identity
 
 **Brand:** Maestro - The AI University
-**Personality:** Warm, approachable, confident, modern
+**Personality:** Warm, approachable, confident, modern, gamified
 **Audience:** Adult learners building careers with AI
 
 ## Visual Theme
 
 **Mode:** Dark-first (single mode, no light variant)
-**Feel:** Premium education meets modern SaaS. Clean, spacious, warm dark tones with off-white text. Pill-shaped interactive elements. Minimal borders, generous whitespace.
+**Feel:** Premium education meets modern SaaS. Clean, spacious, warm dark tones with off-white text. Pill-shaped interactive elements. Minimal borders, generous whitespace. Gamification elements (points, multipliers, countdowns) add energy without cluttering.
 
 ## Color Palette
 
@@ -81,6 +82,7 @@
 ### Buttons
 ```css
 /* Primary Button (Maestro signature: inverted light-on-dark) */
+/* Used for: main CTAs like "Mark as Complete", enrollment steps */
 .btn-primary {
   background: #ECEBE4;
   color: #0A0A0A;
@@ -95,6 +97,7 @@
 .btn-primary:hover { opacity: 0.9; }
 
 /* Secondary Button (outline) */
+/* Used for: "Continue" button in Up Next card, less prominent actions */
 .btn-secondary {
   background: transparent;
   color: #ECEBE4;
@@ -120,6 +123,8 @@
 }
 .btn-ghost:hover { background: rgba(255, 255, 255, 0.05); }
 ```
+
+**PRODUCTION NOTE:** The "Continue" button in the Up Next card uses the **secondary (outline)** style, NOT the primary filled style. Primary filled is reserved for main CTAs like "Mark as Complete".
 
 ### Cards
 ```css
@@ -185,6 +190,116 @@
   padding: 8px 16px;
 }
 .nav-link:hover { background: rgba(255, 255, 255, 0.05); }
+```
+
+## Production App Patterns (from screenshots)
+
+### Task Icons
+Task icons in the weekly goals list use **circular** containers, not rounded squares:
+```css
+.task-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%; /* Circle, NOT rounded-lg */
+  background: #2E2E2E; /* bg-elevated */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.task-icon--completed {
+  background: rgba(85, 88, 230, 0.15); /* primary/15 */
+}
+```
+
+### Completed Task Indicator
+When a task is completed, the icon circle shows a **checkmark icon directly inside** (replaces the original task icon). There is NO separate green check on the right side. The right side shows nothing or the points earned.
+```css
+.task-icon--completed svg {
+  color: #5558E6; /* primary color checkmark */
+}
+```
+
+### Week Tab Connectors
+Production week tabs have **dashed line connectors** between them, creating a visual "timeline" feel:
+```css
+/* Dashed connector between tab pills */
+.week-tab-connector {
+  width: 16px;
+  border-top: 1px dashed #393937;
+  margin: 0 -2px; /* overlap slightly with pill gaps */
+}
+```
+
+### Week Tab Badges
+Locked tabs show additional info:
+- **Countdown labels**: small text like "3d" or "10d" below or next to the tab
+- **Bonus badges**: "+2 diamond" pill badge near the tab showing bonus points for that week
+- **Lock icons**: inside locked tabs
+
+### "Unlocks in" Banner
+Above locked week content, a dark banner shows the countdown:
+```css
+.unlock-banner {
+  background: #2E2E2E; /* bg-elevated */
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: center;
+  color: #A8A79F; /* text-secondary */
+  font-size: 14px;
+}
+/* Timer emoji + "Unlocks in 3d 8h" */
+```
+
+### Bonus Section
+Below the main task list, a "Bonus" section is separated by a dotted line:
+```css
+/* Dotted divider with "Bonus" label centered */
+.bonus-divider {
+  border-top: 1px dashed #393937;
+  position: relative;
+  margin: 16px 0;
+}
+.bonus-divider-label {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #232323; /* bg-surface, matches card bg */
+  padding: 0 12px;
+  color: #6B6B65; /* text-muted */
+  font-size: 12px;
+  font-weight: 500;
+}
+```
+
+Bonus tasks appear below with the same row style. A locked "Complete all to unlock" row at the bottom shows aggregate bonus points.
+
+### Points Multiplier Bar
+At the bottom of the weekly goals section, a multiplier incentive bar:
+```css
+.multiplier-bar {
+  background: #2E2E2E; /* bg-elevated */
+  border-radius: 0 0 16px 16px; /* matches card bottom corners */
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 14px;
+  color: #A8A79F;
+}
+/* Shows "x2 diamond" with diamond icon in warning/gold color */
+```
+
+### Up Next Card — Continue Button
+The "Continue" button is **outlined** (secondary style), NOT solid filled:
+```css
+.up-next-continue {
+  background: transparent;
+  color: #ECEBE4;
+  border: 1px solid #393937;
+  border-radius: 100px;
+  padding: 10px 24px;
+  font-weight: 500;
+  font-size: 14px;
+}
 ```
 
 ## Layout
@@ -262,3 +377,8 @@ Prefer subtle opacity and transform animations. Avoid flashy effects. Movement s
 | 2026-04-07 | Created from maestro.org homepage inspection | Match prototype to real product design |
 | 2026-04-07 | Kept `--accent-primary: #5558E6` from existing prototype | Already WCAG AA compliant, consistent with prototype work |
 | 2026-04-07 | Used `#1A1A1A` instead of `#0F1117` for bg-primary | Closer to maestro.org actual `#232323`, warmer tone |
+| 2026-04-07 | Updated from production app screenshots | User provided 3 screenshots of real Maestro app |
+| 2026-04-07 | Task icons: circles (not rounded squares) | Production screenshots clearly show circular icon containers |
+| 2026-04-07 | Continue button: outline/secondary style | Production uses bordered pill, not solid fill |
+| 2026-04-07 | Added week tab connectors, bonus section, multiplier bar | Match production gamification patterns |
+| 2026-04-07 | Completed tasks: checkmark replaces icon in circle | Production shows check inside the icon circle, no separate green check |
