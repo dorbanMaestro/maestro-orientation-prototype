@@ -11,6 +11,7 @@ import { mockCohort, mockPod } from '../../../data/orientationData';
 
 export default function CommitmentContent() {
   const [commitment, setCommitment] = useState('');
+  const [shared, setShared] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -20,7 +21,7 @@ export default function CommitmentContent() {
           Make Your Commitment
         </h3>
         <p className="text-sm text-text-tertiary mt-1">
-          Launch your pod challenge, share your goal with the cohort, and preview Day 1.
+          Commit to your pod and set the tone for Week 1.
         </p>
       </div>
 
@@ -38,11 +39,10 @@ export default function CommitmentContent() {
         </div>
 
         <p className="text-sm text-text-secondary leading-relaxed">
-          Starting Day 1, your pod will work together to complete{' '}
+          Complete the first week of the degree together and{' '}
           <span className="font-semibold text-text-primary">
-            {mockPod.week1Goal.targetLessons} lessons
-          </span>{' '}
-          in Week 1.
+            make sure no one is left behind
+          </span>.
         </p>
 
         {/* Pod member avatar stack */}
@@ -59,7 +59,7 @@ export default function CommitmentContent() {
             ))}
           </div>
           <span className="text-xs text-text-tertiary ml-1">
-            {mockPod.members.length} pod members
+            {mockPod.members.length} pod students
           </span>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function CommitmentContent() {
         <textarea
           value={commitment}
           onChange={(e) => setCommitment(e.target.value.slice(0, 280))}
-          placeholder="I commit to..."
+          placeholder="I commit to help my pod achieve our first challenge by..."
           rows={5}
           className="w-full bg-transparent border border-neutral-dark/40 rounded-lg px-4 py-3 text-sm text-text-primary placeholder:text-text-disabled focus:outline-none focus:border-neutral-dark transition-colors resize-none"
         />
@@ -84,7 +84,7 @@ export default function CommitmentContent() {
       {/* Cohort context */}
       <div className="flex items-center gap-3 py-3 border-t border-b border-neutral-dark/20">
         <p className="text-sm text-text-tertiary">
-          <span className="font-medium text-text-secondary">{mockCohort.studentCount} students</span>{' '}
+          Your <span className="font-medium text-text-secondary">{mockPod.members.length} pod students</span>{' '}
           will see your commitment
         </p>
       </div>
@@ -99,51 +99,35 @@ export default function CommitmentContent() {
           </h4>
         </div>
 
-        {/* Lesson info rows */}
-        <div className="space-y-2">
-          <div className="flex items-baseline justify-between">
-            <span className="text-sm text-text-tertiary">First lesson</span>
-            <span className="text-sm font-medium text-text-primary">
-              Introduction to AI Foundations
-            </span>
-          </div>
+        <p className="text-sm text-text-secondary leading-relaxed">
+          Your cohort starts on{' '}
+          <span className="font-semibold text-text-primary">
+            {new Date(mockCohort.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+          </span>. Get ready!
+        </p>
+      </div>
 
-          <div className="flex items-baseline justify-between">
-            <span className="text-sm text-text-tertiary">Duration</span>
-            <span className="text-sm text-text-secondary">~15 min</span>
-          </div>
-
-          <div className="flex items-baseline justify-between">
-            <span className="text-sm text-text-tertiary">Access</span>
-            <span className="text-sm text-text-secondary text-right max-w-[60%]">
-              Available on your Learn page when your cohort starts
-            </span>
-          </div>
+      {/* Share button — shows success after clicking */}
+      {!shared ? (
+        <button
+          onClick={() => {
+            console.log('Commitment shared:', commitment);
+            setShared(true);
+          }}
+          disabled={commitment.length < 10}
+          className={`w-full py-3 font-medium text-sm rounded-lg transition-colors cursor-pointer ${
+            commitment.length >= 10
+              ? 'text-text-primary border border-text-primary/40 hover:bg-bg-hover'
+              : 'text-text-disabled border border-neutral-dark/30 cursor-not-allowed'
+          }`}
+        >
+          Share My Commitment
+        </button>
+      ) : (
+        <div className="text-center py-3">
+          <p className="text-sm text-green-400 font-medium">Commitment shared with your pod!</p>
         </div>
-      </div>
-
-      {/* Inspirational quote — clean, minimal */}
-      <div className="pt-1">
-        <p className="text-sm text-text-secondary italic leading-relaxed">
-          "The moment you make a public commitment, you've already changed.
-          You've told the world — and yourself — that you're serious."
-        </p>
-        <p className="text-xs text-text-tertiary mt-2">
-          — Dr. Robert Cialdini
-        </p>
-      </div>
-
-      {/* Share button — ghost/outlined when disabled, solid when ready */}
-      <button
-        disabled={commitment.length < 10}
-        className={`w-full py-3 font-medium text-sm rounded-lg transition-colors cursor-pointer ${
-          commitment.length >= 10
-            ? 'text-text-primary border border-text-primary/40 hover:bg-bg-hover'
-            : 'text-text-disabled border border-neutral-dark/30 cursor-not-allowed'
-        }`}
-      >
-        Share My Commitment
-      </button>
+      )}
     </div>
   );
 }

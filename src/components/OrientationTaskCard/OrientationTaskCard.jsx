@@ -41,21 +41,21 @@ const iconMap = {
   'clipboard-list': ClipboardList,
 };
 
-// 8 segments to match the Maestro design
-const SEGMENT_COUNT = 8;
-
 /**
- * Segmented progress bar — 8 thin rectangular segments with gaps.
+ * Segmented progress bar — segments match the number of phases in each task.
  * Filled segments = indigo, unfilled = dark gray.
+ * @param {string} status - 'completed', 'in_progress', or 'not_started'
+ * @param {number} steps - total number of segments (phases in this task)
  */
-function SegmentedProgressBar({ status }) {
+function SegmentedProgressBar({ status, steps = 1 }) {
+  const segmentCount = Math.max(steps, 1);
   let filledCount = 0;
-  if (status === 'completed') filledCount = SEGMENT_COUNT;
-  if (status === 'in_progress') filledCount = 3; // ~40% visual
+  if (status === 'completed') filledCount = segmentCount;
+  if (status === 'in_progress') filledCount = Math.max(1, Math.round(segmentCount * 0.4)); // ~40% progress
 
   return (
     <div className="flex items-center gap-[3px] mt-2">
-      {Array.from({ length: SEGMENT_COUNT }).map((_, i) => (
+      {Array.from({ length: segmentCount }).map((_, i) => (
         <div
           key={i}
           className={`h-[4px] rounded-[2px] flex-1 ${
@@ -135,7 +135,7 @@ export default function OrientationTaskCard({
           )}
         </div>
 
-        <SegmentedProgressBar status={task.status} />
+        <SegmentedProgressBar status={task.status} steps={task.steps} />
       </div>
     </button>
   );

@@ -82,20 +82,20 @@ const QUESTIONS = [
   },
   {
     key: 'background',
-    question: "What's your background with AI Engineering?",
+    question: "How much experience do you have with programming and computer science?",
     type: 'single',
     options: [
-      { id: 'none', label: 'Complete beginner — never tried it' },
-      { id: 'dabbled', label: 'Dabbled a bit — used ChatGPT or similar' },
-      { id: 'some', label: 'Some experience — taken a course or two' },
-      { id: 'experienced', label: 'Experienced — worked with AI professionally' },
+      { id: 'none', label: 'Complete beginner — no coding experience' },
+      { id: 'dabbled', label: 'Some basics — tried tutorials or a bootcamp' },
+      { id: 'some', label: 'Intermediate — built small projects or taken courses' },
+      { id: 'experienced', label: 'Experienced — worked as a developer or studied CS' },
     ],
   },
   {
-    key: 'current_role',
-    question: "What's your current role or field?",
+    key: 'nickname',
+    question: "How would you like Maestro to call you?",
     type: 'freetext',
-    placeholder: 'e.g. Marketing Manager, Software Developer, Student...',
+    placeholder: 'e.g. Ricky, Rick, Ricardo...',
   },
 ];
 
@@ -204,10 +204,10 @@ function generateTutorProfile(answers) {
 
   // Background
   const bgMap = {
-    none: 'Since you\'re a complete beginner, it will start from the fundamentals and build up gradually.',
-    dabbled: 'Since you\'ve dabbled with AI tools, it will build on what you already know.',
-    some: 'Given your existing coursework, it will move at a moderate pace and fill in gaps.',
-    experienced: 'Given your professional experience, it will focus on deepening and refining your knowledge.',
+    none: 'Since you\'re new to programming, it will start from the fundamentals and build up gradually.',
+    dabbled: 'Since you have some coding basics, it will build on what you already know.',
+    some: 'Given your intermediate experience, it will move at a moderate pace and fill in gaps.',
+    experienced: 'Given your development experience, it will focus on deepening and refining your knowledge.',
   };
   if (answers.background) {
     parts.push(bgMap[answers.background] || '');

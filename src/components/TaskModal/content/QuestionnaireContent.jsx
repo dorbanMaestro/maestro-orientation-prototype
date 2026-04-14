@@ -1,6 +1,6 @@
 // QuestionnaireContent — "Tell Us About You" multi-step onboarding questionnaire
 // Inspired by Duolingo/Brilliant/Codecademy onboarding flows
-// 6 steps: motivation, time commitment, learning style, challenges, past helpers, expectations
+// 5 steps: motivation, time commitment, challenges, past helpers, expectations
 // Dark theme, clean Maestro aesthetic — emoji as small left icon, ghost option buttons
 
 import { useState } from 'react';
@@ -28,20 +28,6 @@ const STEPS = [
     type: 'composite', // special layout: hours + days
     hoursOptions: [5, 10, 15, 20, '25+'],
     dayOptions: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-  },
-  {
-    key: 'learningStyle',
-    question: 'How do you learn best?',
-    helperText: 'Pick all that apply',
-    type: 'multi',
-    options: [
-      { id: 'video', emoji: '🎬', label: 'Video lessons', sub: 'I learn by watching' },
-      { id: 'reading', emoji: '📖', label: 'Reading & articles', sub: 'I prefer written content' },
-      { id: 'projects', emoji: '🛠️', label: 'Hands-on projects', sub: 'I learn by doing' },
-      { id: 'group', emoji: '👥', label: 'Group discussions', sub: 'I learn from peers' },
-      { id: 'ai_tutor', emoji: '🤖', label: 'AI tutor / chatbot', sub: 'I like interactive Q&A' },
-      { id: 'quizzes', emoji: '📝', label: 'Practice quizzes', sub: 'I learn through testing' },
-    ],
   },
   {
     key: 'challenges',
@@ -82,7 +68,6 @@ const STEPS = [
       { id: 'career_services', emoji: '💼', label: 'Career services & job placement', sub: null },
       { id: 'community', emoji: '👥', label: 'A supportive learning community', sub: null },
       { id: 'mentorship', emoji: '🧑‍🏫', label: 'Mentorship from industry experts', sub: null },
-      { id: 'ai_learning', emoji: '🤖', label: 'AI-powered personalized learning', sub: null },
       { id: 'progress', emoji: '📊', label: 'Track my progress clearly', sub: null },
       { id: 'self_paced', emoji: '🏃', label: 'Self-paced, flexible schedule', sub: null },
     ],
@@ -219,7 +204,6 @@ export default function QuestionnaireContent() {
     motivation: null,
     hoursPerWeek: null,
     preferredDays: [],
-    learningStyle: [],
     challenges: [],
     pastHelpers: [],
     expectations: [],

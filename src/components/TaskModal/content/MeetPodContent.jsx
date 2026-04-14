@@ -1,5 +1,5 @@
 // MeetPodContent — "Meet Your Accountability Pod" orientation task
-// 3-step flow: (1) View pod members, (2) Send first message, (3) Confirm shared goal
+// 2-step flow: (1) View pod members, (2) Send first message
 // Clean Maestro aesthetic: no nested cards, thin separators, spacious layout
 
 import { useState } from 'react';
@@ -14,16 +14,11 @@ const enrichedMembers = mockPod.members.map((member) => {
   };
 });
 
-// Default goal lesson count from mock data
-const DEFAULT_LESSON_COUNT = mockPod.week1Goal.targetLessons;
-
 export default function MeetPodContent() {
-  // --- State for the 3-step flow ---
-  const [currentStep, setCurrentStep] = useState(1); // 1, 2, or 3
+  // --- State for the 2-step flow ---
+  const [currentStep, setCurrentStep] = useState(1); // 1 or 2
   const [chatMessage, setChatMessage] = useState(''); // Step 2: user's first message
   const [messageSent, setMessageSent] = useState(false); // Step 2: tracks if they sent
-  const [lessonCount, setLessonCount] = useState(DEFAULT_LESSON_COUNT); // Step 3: editable goal
-  const [goalConfirmed, setGoalConfirmed] = useState(false); // Step 3: tracks confirmation
 
   // Initials helper (same as before)
   const getInitials = (name) => {
@@ -42,32 +37,16 @@ export default function MeetPodContent() {
     setMessageSent(true);
   };
 
-  // Handle confirming the shared goal
-  const handleConfirmGoal = () => {
-    console.log('Goal confirmed:', lessonCount, 'lessons');
-    setGoalConfirmed(true);
-  };
-
-  // Clamp lesson count between 1 and 20
-  const handleLessonCountChange = (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (isNaN(val)) {
-      setLessonCount('');
-      return;
-    }
-    setLessonCount(Math.max(1, Math.min(20, val)));
-  };
-
   return (
     <div className="space-y-5">
 
-      {/* ── Step indicator: "Step X of 3" + dots ── */}
+      {/* ── Step indicator: "Step X of 2" + dots ── */}
       <div className="flex items-center justify-between">
         <span className="text-xs text-text-tertiary font-medium">
-          Step {currentStep} of 3
+          Step {currentStep} of 2
         </span>
         <div className="flex items-center gap-1.5">
-          {[1, 2, 3].map((step) => (
+          {[1, 2].map((step) => (
             <div
               key={step}
               className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -257,86 +236,15 @@ export default function MeetPodContent() {
               </div>
             </div>
           ) : (
-            /* Continue to Step 3 after sending */
-            <button
-              onClick={() => setCurrentStep(3)}
-              className="w-full py-2.5 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors cursor-pointer"
-            >
-              Continue
-            </button>
-          )}
-        </>
-      )}
-
-      {/* ══════════════════════════════════════════
-          STEP 3: Confirm or edit shared Week 1 goal
-         ══════════════════════════════════════════ */}
-      {currentStep === 3 && (
-        <>
-          <div>
-            <h3 className="text-xl font-medium text-text-primary">
-              Set Your Shared Goal
-            </h3>
-            <p className="text-sm text-text-tertiary mt-1">
-              Confirm or adjust your pod's Week 1 target.
-            </p>
-          </div>
-
-          <div className="border-b border-neutral-dark/20" />
-
-          {/* Editable goal */}
-          {!goalConfirmed ? (
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-text-secondary">Complete</span>
-                <input
-                  type="number"
-                  min={1}
-                  max={20}
-                  value={lessonCount}
-                  onChange={handleLessonCountChange}
-                  className="w-16 px-2 py-1.5 text-sm text-center text-text-primary bg-transparent border border-neutral-dark/40 rounded-lg focus:outline-none focus:border-primary transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                />
-                <span className="text-sm text-text-secondary">lessons together in Week 1</span>
-              </div>
-
-              <p className="text-xs text-text-tertiary">
-                Work together, hold each other accountable, and celebrate wins.
-              </p>
-
-              <button
-                onClick={handleConfirmGoal}
-                className="w-full py-2.5 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors cursor-pointer"
-              >
-                Confirm Goal
-              </button>
-            </div>
-          ) : (
-            /* Confirmed state */
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <svg
-                  className="w-5 h-5 text-green-400 shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-sm font-medium text-text-primary">
-                  Complete {lessonCount} lessons together in Week 1
-                </span>
-              </div>
-              <p className="text-xs text-green-400/80">
-                Goal confirmed! You're all set.
-              </p>
+            /* Message sent — task complete */
+            <div className="text-center py-2">
+              <p className="text-sm text-green-400 font-medium">Message sent! You're all set.</p>
             </div>
           )}
         </>
       )}
 
-      {/* ── Back button (steps 2 & 3 only) ── */}
+      {/* ── Back button (step 2 only) ── */}
       {currentStep > 1 && (
         <button
           onClick={() => setCurrentStep(currentStep - 1)}

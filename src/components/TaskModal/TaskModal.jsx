@@ -5,7 +5,7 @@
 
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Check } from 'lucide-react';
+import { X } from 'lucide-react';
 
 // Import modal content panels for each enrollment task type
 import WelcomeContent from './content/WelcomeContent';
@@ -80,8 +80,6 @@ export default function TaskModal({ isOpen, task, onClose, onComplete }) {
     ? enrollmentContentMap[task.modalType]
     : orientationContentMap[task.id];
 
-  const isCompleted = task.status === 'completed';
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -126,22 +124,6 @@ export default function TaskModal({ isOpen, task, onClose, onComplete }) {
                 )}
               </div>
 
-              {/* Footer — Complete button */}
-              <div className="sticky bottom-0 bg-bg-surface border-t border-border-subtle px-6 py-4">
-                {isCompleted ? (
-                  <div className="flex items-center justify-center gap-2 text-success">
-                    <Check size={18} />
-                    <span className="text-sm font-medium">Completed</span>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => onComplete?.(task)}
-                    className="w-full py-3 bg-text-primary hover:opacity-90 text-text-inverse font-medium rounded-full transition-opacity cursor-pointer text-sm"
-                  >
-                    Mark as Complete
-                  </button>
-                )}
-              </div>
             </div>
           </motion.div>
         </>

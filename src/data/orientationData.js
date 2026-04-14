@@ -24,6 +24,7 @@ export const mockCohort = {
 };
 
 // 8 orientation tasks from the PRD (updated — no "Invite a Friend")
+// steps = number of phases/actions the student does inside this task (drives the progress bar segments)
 export const mockOrientationTasks = [
   {
     id: 'explore_campus',
@@ -34,6 +35,7 @@ export const mockOrientationTasks = [
     icon: 'compass',
     status: 'completed',
     optional: false,
+    steps: 3, // navigate different campus areas
   },
   {
     id: 'meet_curriculum',
@@ -44,6 +46,7 @@ export const mockOrientationTasks = [
     icon: 'book-open',
     status: 'completed',
     optional: false,
+    steps: 3, // program overview, skills, schedule
   },
   {
     id: 'personalize_tutor',
@@ -54,6 +57,7 @@ export const mockOrientationTasks = [
     icon: 'graduation-cap',
     status: 'in_progress',
     optional: false,
+    steps: 8, // 8 tutor preference questions
   },
   {
     id: 'introduce_yourself',
@@ -64,6 +68,7 @@ export const mockOrientationTasks = [
     icon: 'hand-metal',
     status: 'not_started',
     optional: false,
+    steps: 1, // post your intro
   },
   {
     id: 'meet_pod',
@@ -74,6 +79,7 @@ export const mockOrientationTasks = [
     icon: 'users',
     status: 'not_started',
     optional: false,
+    steps: 2, // meet pod + send first message
   },
   {
     id: 'reflection',
@@ -84,6 +90,7 @@ export const mockOrientationTasks = [
     icon: 'pen-line',
     status: 'not_started',
     optional: false,
+    steps: 1, // write reflection
   },
   {
     id: 'preview_lesson',
@@ -94,6 +101,7 @@ export const mockOrientationTasks = [
     icon: 'target',
     status: 'not_started',
     optional: false,
+    steps: 5, // lesson phases
   },
   {
     id: 'commitment',
@@ -104,11 +112,12 @@ export const mockOrientationTasks = [
     icon: 'user-plus',
     status: 'not_started',
     optional: false,
+    steps: 1, // share your goal
   },
 ];
 
 // Enrollment tasks — shown under the "Enrollment" tab
-// Updated: 6 tasks — added Onboarding Questions (#3) and Student Info Center (#6)
+// steps = number of phases/actions the student does inside this task (drives the progress bar segments)
 export const mockEnrollmentTasks = [
   {
     id: 'enroll_welcome',
@@ -120,6 +129,7 @@ export const mockEnrollmentTasks = [
     status: 'completed',
     optional: false,
     modalType: 'welcome',
+    steps: 1,
   },
   {
     id: 'enroll_profile',
@@ -131,17 +141,19 @@ export const mockEnrollmentTasks = [
     status: 'in_progress',
     optional: false,
     modalType: 'profile',
+    steps: 3, // photo, bio, details
   },
   {
     id: 'enroll_questions',
     number: 3,
     name: "Let's Get to Know You",
-    goal: 'Answer 7 quick questions so we can personalize your experience',
+    goal: 'Answer 5 quick questions so we can personalize your experience',
     duration: 2,
     icon: 'clipboard-list',
     status: 'not_started',
     optional: false,
     modalType: 'questionnaire',
+    steps: 5, // 5 questions
   },
   {
     id: 'enroll_roster',
@@ -153,6 +165,7 @@ export const mockEnrollmentTasks = [
     status: 'not_started',
     optional: false,
     modalType: 'roster',
+    steps: 1,
   },
   {
     id: 'enroll_preview',
@@ -164,17 +177,7 @@ export const mockEnrollmentTasks = [
     status: 'not_started',
     optional: false,
     modalType: 'preview',
-  },
-  {
-    id: 'enroll_info_center',
-    number: 6,
-    name: 'Student Information Center',
-    goal: 'Explore degree details, FAQs, and support resources',
-    duration: 5,
-    icon: 'book-open',
-    status: 'not_started',
-    optional: false,
-    modalType: 'info_center',
+    steps: 1,
   },
 ];
 
