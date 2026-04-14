@@ -13,16 +13,17 @@ import ProfileContent from './content/ProfileContent';
 import RosterContent from './content/RosterContent';
 import PreviewContent from './content/PreviewContent';
 import QuestionnaireContent from './content/QuestionnaireContent';
+import InfoCenterContent from './content/InfoCenterContent';
 
 // Import rich content panels for each orientation task (by task ID)
 import ExploreCampusContent from './content/ExploreCampusContent';
 import MeetCurriculumContent from './content/MeetCurriculumContent';
+import PersonalizeTutorContent from './content/PersonalizeTutorContent';
 import IntroduceYourselfContent from './content/IntroduceYourselfContent';
 import MeetPodContent from './content/MeetPodContent';
 import ReflectionContent from './content/ReflectionContent';
 import PreviewLessonContent from './content/PreviewLessonContent';
 import CommitmentContent from './content/CommitmentContent';
-import InviteFriendContent from './content/InviteFriendContent';
 
 // Map enrollment modalType to content component
 const enrollmentContentMap = {
@@ -31,18 +32,19 @@ const enrollmentContentMap = {
   roster: RosterContent,
   preview: PreviewContent,
   questionnaire: QuestionnaireContent,
+  info_center: InfoCenterContent,
 };
 
 // Map orientation task ID to its rich content component
 const orientationContentMap = {
   explore_campus: ExploreCampusContent,
   meet_curriculum: MeetCurriculumContent,
+  personalize_tutor: PersonalizeTutorContent,
   introduce_yourself: IntroduceYourselfContent,
   meet_pod: MeetPodContent,
   reflection: ReflectionContent,
   preview_lesson: PreviewLessonContent,
   commitment: CommitmentContent,
-  invite_friend: InviteFriendContent,
 };
 
 /**
@@ -72,7 +74,7 @@ export default function TaskModal({ isOpen, task, onClose, onComplete }) {
   if (!task) return null;
 
   // Pick the right content component:
-  // 1. Enrollment tasks use modalType (welcome, profile, roster, preview, questionnaire)
+  // 1. Enrollment tasks use modalType (welcome, profile, roster, preview, questionnaire, info_center)
   // 2. Orientation tasks use task ID (explore_campus, meet_curriculum, etc.)
   const ContentComponent = task.modalType
     ? enrollmentContentMap[task.modalType]

@@ -23,7 +23,7 @@ export const mockCohort = {
   studentCount: 847,
 };
 
-// 8 orientation tasks from the PRD
+// 8 orientation tasks from the PRD (updated — no "Invite a Friend")
 export const mockOrientationTasks = [
   {
     id: 'explore_campus',
@@ -39,27 +39,37 @@ export const mockOrientationTasks = [
     id: 'meet_curriculum',
     number: 2,
     name: 'Meet Your Curriculum',
-    goal: 'See what you\'ll learn and get a first taste',
+    goal: 'Understand what you\'ll learn and which skills you\'ll gain',
     duration: 10,
     icon: 'book-open',
     status: 'completed',
     optional: false,
   },
   {
-    id: 'introduce_yourself',
+    id: 'personalize_tutor',
     number: 3,
-    name: 'Introduce Yourself',
-    goal: 'Post your intro and connect with 3 classmates',
-    duration: 15,
-    icon: 'hand-metal',
+    name: 'Personalize Your Tutor',
+    goal: 'Set up your AI tutor to teach the way you learn best',
+    duration: 5,
+    icon: 'graduation-cap',
     status: 'in_progress',
     optional: false,
   },
   {
-    id: 'meet_pod',
+    id: 'introduce_yourself',
     number: 4,
+    name: 'Introduce Yourself',
+    goal: 'Post your intro in the cohort discussion',
+    duration: 10,
+    icon: 'hand-metal',
+    status: 'not_started',
+    optional: false,
+  },
+  {
+    id: 'meet_pod',
+    number: 5,
     name: 'Meet Your Accountability Pod',
-    goal: 'Meet your study partners and set your first shared goal',
+    goal: 'Meet your study partners and send your first message',
     duration: 10,
     icon: 'users',
     status: 'not_started',
@@ -67,48 +77,38 @@ export const mockOrientationTasks = [
   },
   {
     id: 'reflection',
-    number: 5,
+    number: 6,
     name: 'Write Your Pre-Course Reflection',
-    goal: 'Set your intentions and build your study schedule',
-    duration: 10,
+    goal: 'Set your personal intentions for the term',
+    duration: 5,
     icon: 'pen-line',
     status: 'not_started',
     optional: false,
   },
   {
     id: 'preview_lesson',
-    number: 6,
+    number: 7,
     name: 'Complete a Real Lesson',
     goal: 'Prove to yourself you\'re ready for Day 1',
     duration: 18,
-    icon: 'graduation-cap',
-    status: 'not_started',
-    optional: false,
-  },
-  {
-    id: 'commitment',
-    number: 7,
-    name: 'Make Your Commitment',
-    goal: 'Declare your term goal to your cohort',
-    duration: 5,
     icon: 'target',
     status: 'not_started',
     optional: false,
   },
   {
-    id: 'invite_friend',
+    id: 'commitment',
     number: 8,
-    name: 'Invite a Friend',
-    goal: 'Bring a peer into your cohort',
+    name: 'Make Your Commitment',
+    goal: 'Share your term goal with your pod',
     duration: 5,
     icon: 'user-plus',
     status: 'not_started',
-    optional: true,
+    optional: false,
   },
 ];
 
 // Enrollment tasks — shown under the "Enrollment" tab
-// (questionnaire removed per PRD update — renumbered 1-4)
+// Updated: 6 tasks — added Onboarding Questions (#3) and Student Info Center (#6)
 export const mockEnrollmentTasks = [
   {
     id: 'enroll_welcome',
@@ -133,8 +133,19 @@ export const mockEnrollmentTasks = [
     modalType: 'profile',
   },
   {
-    id: 'enroll_roster',
+    id: 'enroll_questions',
     number: 3,
+    name: 'Onboarding Questions',
+    goal: 'Answer 7 quick questions to help us personalize your experience',
+    duration: 2,
+    icon: 'clipboard-list',
+    status: 'not_started',
+    optional: false,
+    modalType: 'questionnaire',
+  },
+  {
+    id: 'enroll_roster',
+    number: 4,
     name: 'Meet Your Cohort',
     goal: 'Browse classmates joining your program',
     duration: 5,
@@ -145,7 +156,7 @@ export const mockEnrollmentTasks = [
   },
   {
     id: 'enroll_preview',
-    number: 4,
+    number: 5,
     name: 'Preview Orientation Tasks',
     goal: 'See what you\'ll do during orientation week',
     duration: 3,
@@ -153,6 +164,17 @@ export const mockEnrollmentTasks = [
     status: 'not_started',
     optional: false,
     modalType: 'preview',
+  },
+  {
+    id: 'enroll_info_center',
+    number: 6,
+    name: 'Student Information Center',
+    goal: 'Explore degree details, FAQs, and support resources',
+    duration: 5,
+    icon: 'book-open',
+    status: 'not_started',
+    optional: false,
+    modalType: 'info_center',
   },
 ];
 
@@ -219,7 +241,7 @@ export const mockRosterStudents = [
   },
 ];
 
-// Accountability pod for Task 4
+// Accountability pod — 7 members (updated from PRD)
 export const mockPod = {
   podId: 'pod-apr26-001',
   program: 'AI Engineering',
@@ -230,9 +252,12 @@ export const mockPod = {
   },
   members: [
     { id: 'student-002', name: 'Sarah Johnson', avatar: 'https://i.pravatar.cc/150?img=1' },
+    { id: 'student-003', name: 'Mike Chen', avatar: 'https://i.pravatar.cc/150?img=3' },
     { id: 'student-004', name: 'Emma Davis', avatar: 'https://i.pravatar.cc/150?img=5' },
     { id: 'student-005', name: 'James Wilson', avatar: 'https://i.pravatar.cc/150?img=8' },
+    { id: 'student-006', name: 'Priya Patel', avatar: 'https://i.pravatar.cc/150?img=9' },
     { id: 'student-007', name: 'Alex Thompson', avatar: 'https://i.pravatar.cc/150?img=11' },
+    { id: 'student-008', name: 'Maria Garcia', avatar: 'https://i.pravatar.cc/150?img=16' },
   ],
 };
 
