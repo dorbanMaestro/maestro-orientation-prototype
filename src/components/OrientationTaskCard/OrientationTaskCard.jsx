@@ -135,21 +135,7 @@ export default function OrientationTaskCard({
           )}
         </div>
 
-        {/* Time estimate — subtle gray text below the name */}
-        {task.duration && (
-          <span className="text-xs text-text-tertiary mt-0.5 block">
-            ~{task.duration} min
-          </span>
-        )}
-
         <SegmentedProgressBar status={task.status} />
-      </div>
-
-      {/* Right: Points with diamond symbol (production shows points for all states, no separate green check) */}
-      <div className="shrink-0 flex items-center">
-        <span className={`text-sm flex items-center gap-1 ${isCompleted ? 'text-text-tertiary/50' : 'text-text-tertiary'}`}>
-          {taskPoints} <span className="text-warning">&#x25C6;</span>
-        </span>
       </div>
     </button>
   );

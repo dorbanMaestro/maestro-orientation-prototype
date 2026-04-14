@@ -135,8 +135,8 @@ export const mockEnrollmentTasks = [
   {
     id: 'enroll_questions',
     number: 3,
-    name: 'Onboarding Questions',
-    goal: 'Answer 7 quick questions to help us personalize your experience',
+    name: "Let's Get to Know You",
+    goal: 'Answer 7 quick questions so we can personalize your experience',
     duration: 2,
     icon: 'clipboard-list',
     status: 'not_started',

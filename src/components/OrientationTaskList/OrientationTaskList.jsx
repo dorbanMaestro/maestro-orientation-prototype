@@ -130,12 +130,6 @@ export default function OrientationTaskList({
         </div>
       )}
 
-      {/* Points multiplier bar — footer incentive (production pattern) */}
-      <div className="bg-bg-elevated rounded-b-2xl px-4 py-3 flex items-center justify-center gap-2 text-sm text-text-secondary">
-        <span className="text-warning font-semibold">x2</span>
-        <span className="text-warning">&#x25C6;</span>
-        <span>Points multiplier this week</span>
-      </div>
     </section>
   );
 }
