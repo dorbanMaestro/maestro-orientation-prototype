@@ -1,43 +1,39 @@
 // OrientationTaskList — The "Weekly goals" section
-// Matches Maestro production:
-// - Bordered container (subtle 1px border, same style as Up Next card)
-// - Section header inside: icon + "Weekly goals" text (white, semibold)
-// - Progress counter showing "X of Y tasks complete"
-// - Tab bar below the header
-// - Task rows inside (no individual card borders)
-// - Divider lines between task rows
+// RESTRUCTURED: Now shows tasks grouped by 4-week orientation
+// - Week title shown as subheader (e.g. "Set Up & Settle In")
+// - Locked weeks show a lock message instead of tasks
+// - Progress counter shows total across all weeks ("X of 15 tasks complete")
 
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import WeekTabBar from '../WeekTabBar/WeekTabBar';
 import OrientationTaskCard from '../OrientationTaskCard/OrientationTaskCard';
 
 /**
  * Full "Weekly goals" section with bordered container.
- * @param {Array} tasks - Array of task objects
- * @param {Array} weekTabs - Tab bar data
- * @param {string} activeTab - Currently selected tab id
+ * @param {Array} tasks - Array of task objects FOR THE ACTIVE WEEK only
+ * @param {Array} weekTabs - Tab bar data (4 weeks)
+ * @param {string} activeTab - Currently selected tab id (e.g. "week-1")
+ * @param {object} activeWeekMeta - Metadata for active week { title, startDate, status }
  * @param {function} onTabClick - Tab click handler
  * @param {function} onTaskClick - Task click handler
+ * @param {number} totalCompleted - Completed tasks across ALL weeks
+ * @param {number} totalRequired - Total required tasks across ALL weeks
  */
 export default function OrientationTaskList({
   tasks = [],
   weekTabs = [],
   activeTab,
+  activeWeekMeta,
   onTabClick,
   onTaskClick,
+  totalCompleted = 0,
+  totalRequired = 0,
 }) {
-  // Split tasks into regular and bonus (optional) — production shows these separately
-  const regularTasks = tasks.filter(t => !t.optional);
-  const bonusTasks = tasks.filter(t => t.optional);
-
-  // Calculate progress counter from regular tasks only
-  const completed = regularTasks.filter(t => t.status === 'completed').length;
-  const total = regularTasks.length;
-
-  // Total bonus points available
-  const bonusPointsTotal = bonusTasks.length * 8;
-  const allBonusCompleted = bonusTasks.length > 0 && bonusTasks.every(t => t.status === 'completed');
+  // Is this week locked?
+  const isLocked = activeWeekMeta?.status === 'locked';
+  // Is this a term week (post Day 1)?
+  const isTermWeek = activeWeekMeta?.phase === 'term';
 
   // Framer Motion variants for staggered animation
   const containerVariants = {
@@ -65,71 +61,77 @@ export default function OrientationTaskList({
           <h2 className="text-lg font-semibold text-text-primary" style={{ fontFamily: '"Wix Madefor Display", system-ui, sans-serif' }}>Weekly goals</h2>
         </div>
 
-        {/* Progress counter — subtle gray text below the header */}
+        {/* Progress counter — shows total across all 4 weeks */}
         <p className="text-sm text-text-tertiary ml-[30px] mb-5">
-          {completed} of {total} tasks complete
+          {totalCompleted} of {totalRequired} tasks complete
         </p>
 
-        {/* Tab bar */}
+        {/* Tab bar — 4 week tabs */}
         <WeekTabBar tabs={weekTabs} activeTab={activeTab} onTabClick={onTabClick} />
       </div>
 
       {/* Thin separator line */}
       <div className="border-t border-border-default" />
 
-      {/* Regular task rows */}
-      <div className="px-6 pb-2">
-        <motion.div
-          key={activeTab}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {regularTasks.map((task, index) => (
-            <motion.div key={task.id} variants={cardVariants}>
-              <OrientationTaskCard task={task} onClick={onTaskClick} />
-              {/* Divider between rows (not after last one) */}
-              {index < regularTasks.length - 1 && (
-                <div className="border-t border-border-subtle ml-15" />
-              )}
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+      {/* Week title subheader — shows the theme of this week */}
+      {activeWeekMeta && (
+        <div className="px-6 pt-4 pb-2">
+          <h3 className="text-base font-semibold text-text-primary" style={{ fontFamily: '"Wix Madefor Display", system-ui, sans-serif' }}>
+            {activeWeekMeta.title}
+          </h3>
+        </div>
+      )}
 
-      {/* Bonus section — dashed divider with centered "Bonus" label (production pattern) */}
-      {bonusTasks.length > 0 && (
-        <div className="px-6 pb-2">
-          {/* Dashed divider with "Bonus" label */}
-          <div className="relative my-3">
-            <div className="border-t border-dashed border-border-default" />
-            <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-bg-surface px-3 text-xs font-medium text-text-tertiary">
-              Bonus
-            </span>
+      {/* Content: either locked message or task rows */}
+      {isLocked ? (
+        // Locked week — show message with lock icon
+        <div className="px-6 pb-8 pt-4">
+          <div className="flex flex-col items-center justify-center py-10 text-center">
+            <div className="w-12 h-12 rounded-full bg-bg-elevated flex items-center justify-center mb-4">
+              <Lock size={20} className="text-text-disabled" />
+            </div>
+            {isTermWeek ? (
+              <>
+                <p className="text-sm text-text-tertiary font-medium mb-1">
+                  Term starts on {activeWeekMeta.startDate}
+                </p>
+                <p className="text-xs text-text-disabled">
+                  Complete your orientation to be ready for Day 1
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-sm text-text-tertiary font-medium mb-1">
+                  Unlocks on {activeWeekMeta.startDate}
+                </p>
+                <p className="text-xs text-text-disabled">
+                  Complete earlier weeks to get ready
+                </p>
+              </>
+            )}
           </div>
-
-          {/* Bonus task rows */}
-          <motion.div variants={containerVariants} initial="hidden" animate="visible">
-            {bonusTasks.map((task, index) => (
+        </div>
+      ) : (
+        // Active week — show task rows
+        <div className="px-6 pb-2">
+          <motion.div
+            key={activeTab}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {tasks.map((task, index) => (
               <motion.div key={task.id} variants={cardVariants}>
                 <OrientationTaskCard task={task} onClick={onTaskClick} />
-                {index < bonusTasks.length - 1 && (
+                {/* Divider between rows (not after last one) */}
+                {index < tasks.length - 1 && (
                   <div className="border-t border-border-subtle ml-15" />
                 )}
               </motion.div>
             ))}
           </motion.div>
-
-          {/* "Complete all to unlock" locked row (if bonus tasks not all done) */}
-          {!allBonusCompleted && bonusTasks.length > 0 && (
-            <div className="flex items-center justify-center gap-2 py-3 mt-1 rounded-lg bg-bg-elevated/50 text-text-tertiary text-sm">
-              <span>Complete all to unlock</span>
-              <span className="text-warning font-medium">+{bonusPointsTotal} &#x25C6;</span>
-            </div>
-          )}
         </div>
       )}
-
     </section>
   );
 }

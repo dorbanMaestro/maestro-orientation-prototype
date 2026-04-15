@@ -1,4 +1,4 @@
-// CohortRosterScreen — Step 3 of 5 in the enrollment wizard
+// CohortRosterScreen — Step 4 of 5 in the enrollment wizard
 // Shows a grid of 6 classmate cards so the student feels part of a community
 // Uses mockRosterStudents from orientationData.js
 
@@ -14,7 +14,7 @@ export default function CohortRosterScreen() {
   const navigate = useNavigate();
 
   return (
-    <EnrollmentLayout step={3} totalSteps={5}>
+    <EnrollmentLayout step={4} totalSteps={5}>
       {/* Heading */}
       <div className="text-center mb-1">
         <h1 className="text-xl font-bold text-white mb-1">Meet your cohort</h1>

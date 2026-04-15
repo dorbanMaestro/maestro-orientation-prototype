@@ -1,4 +1,4 @@
-// OrientationPreviewScreen — Step 4 of 5 in the enrollment wizard
+// OrientationPreviewScreen — Step 5 of 5 in the enrollment wizard
 // Shows all 8 orientation tasks in preview mode (non-interactive, all not_started)
 // This gives the student a sneak peek of what they'll do during orientation week
 
@@ -21,7 +21,7 @@ export default function OrientationPreviewScreen() {
   }));
 
   return (
-    <EnrollmentLayout step={4} totalSteps={5}>
+    <EnrollmentLayout step={5} totalSteps={5}>
       {/* Heading */}
       <div className="text-center mb-1">
         <h1 className="text-xl font-bold text-white mb-1">
@@ -54,15 +54,15 @@ export default function OrientationPreviewScreen() {
         ))}
       </motion.div>
 
-      {/* CTA Button -- now goes to info center (step 5) instead of home */}
+      {/* CTA Button — final step, go to student home */}
       <Button
         variant="primary"
         size="lg"
         fullWidth
         icon={ArrowRight}
-        onClick={() => navigate('/enrollment/info-center')}
+        onClick={() => navigate('/home')}
       >
-        Continue
+        Go to Student Home
       </Button>
     </EnrollmentLayout>
   );

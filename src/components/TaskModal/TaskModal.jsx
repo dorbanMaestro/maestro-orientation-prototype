@@ -13,7 +13,6 @@ import ProfileContent from './content/ProfileContent';
 import RosterContent from './content/RosterContent';
 import PreviewContent from './content/PreviewContent';
 import QuestionnaireContent from './content/QuestionnaireContent';
-import InfoCenterContent from './content/InfoCenterContent';
 
 // Import rich content panels for each orientation task (by task ID)
 import ExploreCampusContent from './content/ExploreCampusContent';
@@ -25,6 +24,13 @@ import ReflectionContent from './content/ReflectionContent';
 import PreviewLessonContent from './content/PreviewLessonContent';
 import CommitmentContent from './content/CommitmentContent';
 
+// New content components
+import FirstLoginContent from './content/FirstLoginContent';
+import CompleteProfileContent from './content/CompleteProfileContent';
+import OnboardingQuestionsContent from './content/OnboardingQuestionsContent';
+import PodPreferencesContent from './content/PodPreferencesContent';
+import DiscussionContent from './content/DiscussionContent';
+
 // Map enrollment modalType to content component
 const enrollmentContentMap = {
   welcome: WelcomeContent,
@@ -32,19 +38,38 @@ const enrollmentContentMap = {
   roster: RosterContent,
   preview: PreviewContent,
   questionnaire: QuestionnaireContent,
-  info_center: InfoCenterContent,
 };
 
 // Map orientation task ID to its rich content component
 const orientationContentMap = {
+  // Auto-complete milestone
+  first_login: FirstLoginContent,
+  // Profile setup (orientation version)
+  complete_profile: CompleteProfileContent,
+  // Existing tasks
   explore_campus: ExploreCampusContent,
+  // Intro discussion (maps to the existing IntroduceYourselfContent)
+  intro_discussion: IntroduceYourselfContent,
+  introduce_yourself: IntroduceYourselfContent, // keep old mapping for backward compat
+  // Onboarding questionnaire (7 questions about goals/habits/concerns)
+  onboarding_questions: OnboardingQuestionsContent,
+  // Existing tasks
   meet_curriculum: MeetCurriculumContent,
   personalize_tutor: PersonalizeTutorContent,
-  introduce_yourself: IntroduceYourselfContent,
+  // Pod preferences (7 questions about accountability/social style)
+  pod_preferences: PodPreferencesContent,
+  // Discussion variants (reusable component with different props)
+  expectations_discussion: (props) => <DiscussionContent {...props} discussionType="expectations" />,
+  // Existing tasks
   meet_pod: MeetPodContent,
   reflection: ReflectionContent,
+  // Discussion variants continued
+  fears_discussion: (props) => <DiscussionContent {...props} discussionType="fears" />,
+  // Existing tasks
   preview_lesson: PreviewLessonContent,
   commitment: CommitmentContent,
+  // Discussion variant — making friends
+  friends_discussion: (props) => <DiscussionContent {...props} discussionType="friends" />,
 };
 
 /**
@@ -74,7 +99,7 @@ export default function TaskModal({ isOpen, task, onClose, onComplete }) {
   if (!task) return null;
 
   // Pick the right content component:
-  // 1. Enrollment tasks use modalType (welcome, profile, roster, preview, questionnaire, info_center)
+  // 1. Enrollment tasks use modalType (welcome, profile, roster, preview, questionnaire)
   // 2. Orientation tasks use task ID (explore_campus, meet_curriculum, etc.)
   const ContentComponent = task.modalType
     ? enrollmentContentMap[task.modalType]

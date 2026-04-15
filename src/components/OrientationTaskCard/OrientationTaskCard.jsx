@@ -1,12 +1,12 @@
 // OrientationTaskCard — A single task ROW inside the Weekly Goals section
 // Matches Maestro production:
 // - NO individual card borders — these are rows inside the section container
-// - Left: rounded square icon (~44px) with dark bg and white icon
-// - Middle: task name (white, ~15px) + time estimate + optional badge + segmented progress bar below
-// - Right: "8 diamond" points text
-// - Segmented bar: ~8 thin rectangular segments with small gaps
+// - Left: circular icon (~44px) with dark bg and white icon
+// - Middle: task name (white, ~15px) + segmented progress bar below
+// - Right: points text
+// - Segmented bar: thin rectangular segments with small gaps
 // - Filled = blue (#6366f1), unfilled = dark gray
-// - Generous vertical spacing between rows
+// UPDATED: new icons for 4-week structure (message-circle, log-in, bot, flag)
 
 import { Check } from 'lucide-react';
 import {
@@ -23,6 +23,10 @@ import {
   UserCircle,
   UsersRound,
   ListChecks,
+  MessageCircle,
+  LogIn,
+  Bot,
+  Flag,
 } from 'lucide-react';
 
 const iconMap = {
@@ -39,6 +43,10 @@ const iconMap = {
   'users-round': UsersRound,
   'list-checks': ListChecks,
   'clipboard-list': ClipboardList,
+  'message-circle': MessageCircle,
+  'log-in': LogIn,
+  bot: Bot,
+  flag: Flag,
 };
 
 /**
@@ -84,8 +92,6 @@ export default function OrientationTaskCard({
   const isCompleted = task.status === 'completed';
   const isLocked = task.status === 'locked';
 
-  const taskPoints = 8;
-
   return (
     <button
       onClick={() => interactive && !isLocked && onClick?.(task)}
@@ -96,7 +102,7 @@ export default function OrientationTaskCard({
         ${isLocked ? 'opacity-35 cursor-not-allowed' : ''}
       `}
     >
-      {/* Left: Circular icon — 44px, dark bg (production uses circles, not rounded squares) */}
+      {/* Left: Circular icon — 44px, dark bg */}
       <div
         className={`
           w-11 h-11 rounded-full flex items-center justify-center shrink-0
@@ -114,7 +120,7 @@ export default function OrientationTaskCard({
         )}
       </div>
 
-      {/* Middle: Task name + time estimate + optional badge + segmented progress bar */}
+      {/* Middle: Task name + optional badge + segmented progress bar */}
       <div className="flex-1 min-w-0">
         {/* Task name row — name + optional badge on same line */}
         <div className="flex items-center gap-2">

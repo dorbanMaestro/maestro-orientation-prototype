@@ -109,13 +109,13 @@ export default function ProfileSetupScreen() {
         </div>
       </motion.div>
 
-      {/* CTA Button */}
+      {/* CTA Button — now navigates to questionnaire (step 3) */}
       <Button
         variant="primary"
         size="lg"
         fullWidth
         icon={ArrowRight}
-        onClick={() => navigate('/enrollment/roster')}
+        onClick={() => navigate('/enrollment/questionnaire')}
       >
         Save & continue
       </Button>

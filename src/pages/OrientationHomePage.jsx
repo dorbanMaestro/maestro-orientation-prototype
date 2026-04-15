@@ -1,6 +1,6 @@
 // OrientationHomePage — main home screen
-// Now has two task sets: Enrollment tasks + Orientation tasks
-// Switching tabs shows different task lists
+// RESTRUCTURED: 4-week orientation tabs (was Enrollment/Orientation split)
+// Week 1 is active by default, Weeks 2-4 are locked
 // Clicking any task opens a modal with the task action
 
 import { useState } from 'react';
@@ -13,30 +13,37 @@ import TaskModal from '../components/TaskModal/TaskModal';
 import {
   mockStudent,
   mockOrientationTasks,
-  mockEnrollmentTasks,
   mockWeekTabs,
   getNextTask,
+  getCompletedCount,
+  getTotalRequired,
+  getWeekNumberFromTabId,
 } from '../data/orientationData';
 
 export default function OrientationHomePage() {
-  // Two separate task arrays — enrollment and orientation
-  const [enrollmentTasks, setEnrollmentTasks] = useState(mockEnrollmentTasks);
-  const [orientationTasks, setOrientationTasks] = useState(mockOrientationTasks);
+  // All orientation tasks (across 4 weeks) in a single state array
+  const [tasks, setTasks] = useState(mockOrientationTasks);
 
-  // Which tab is active — "enrollment" by default (first thing new students see)
-  const [activeTab, setActiveTab] = useState('enrollment');
+  // Which week tab is active — "week-1" by default (first week students see)
+  const [activeTab, setActiveTab] = useState('week-1');
 
   // Modal state — which task is open, if any
   const [modalTask, setModalTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Get tasks for the currently active tab
-  const currentTasks = activeTab === 'enrollment' ? enrollmentTasks : orientationTasks;
+  // Filter tasks for the currently active week tab
+  const activeWeekNumber = getWeekNumberFromTabId(activeTab);
+  const currentWeekTasks = tasks.filter(t => t.week === activeWeekNumber);
 
-  // Next task for the UpNextCard — check enrollment first, then orientation
-  const nextEnrollmentTask = getNextTask(enrollmentTasks);
-  const nextOrientationTask = getNextTask(orientationTasks);
-  const nextTask = nextEnrollmentTask || nextOrientationTask;
+  // Get the week metadata (title, startDate) for the active tab
+  const activeWeekMeta = mockWeekTabs.find(w => w.id === activeTab);
+
+  // Total progress across ALL weeks (shown in header)
+  const totalCompleted = getCompletedCount(tasks);
+  const totalRequired = getTotalRequired(tasks);
+
+  // Next task — find the first incomplete task across all weeks
+  const nextTask = getNextTask(tasks);
 
   // Open modal when a task card is clicked
   const handleTaskClick = (task) => {
@@ -48,17 +55,9 @@ export default function OrientationHomePage() {
   // Mark a task as completed from the modal
   const handleCompleteTask = (task) => {
     console.log(`Task completed: ${task.name}`);
-
-    if (activeTab === 'enrollment') {
-      setEnrollmentTasks((prev) =>
-        prev.map((t) => (t.id === task.id ? { ...t, status: 'completed' } : t))
-      );
-    } else {
-      setOrientationTasks((prev) =>
-        prev.map((t) => (t.id === task.id ? { ...t, status: 'completed' } : t))
-      );
-    }
-
+    setTasks((prev) =>
+      prev.map((t) => (t.id === task.id ? { ...t, status: 'completed' } : t))
+    );
     // Update the modal task to reflect completion
     setModalTask({ ...task, status: 'completed' });
   };
@@ -69,14 +68,11 @@ export default function OrientationHomePage() {
     setModalTask(null);
   };
 
-  // Handle "Continue"/"Start" from UpNextCard — also opens modal
+  // Handle "Continue"/"Start" from UpNextCard — switch to the right week tab and open modal
   const handleUpNextClick = (task) => {
-    // If the up-next task is from enrollment, switch to enrollment tab
-    if (enrollmentTasks.some((t) => t.id === task.id)) {
-      setActiveTab('enrollment');
-    } else {
-      setActiveTab('orientation');
-    }
+    // Switch to the week tab that contains this task
+    const weekTab = `week-${task.week}`;
+    setActiveTab(weekTab);
     handleTaskClick(task);
   };
 
@@ -99,13 +95,16 @@ export default function OrientationHomePage() {
           <UpNextCard task={nextTask} onStart={handleUpNextClick} />
         </div>
 
-        {/* 3. Weekly Goals section — shows enrollment or orientation tasks based on tab */}
+        {/* 3. Weekly Goals section — shows tasks for the active week */}
         <OrientationTaskList
-          tasks={currentTasks}
+          tasks={currentWeekTasks}
           weekTabs={mockWeekTabs}
           activeTab={activeTab}
+          activeWeekMeta={activeWeekMeta}
           onTabClick={setActiveTab}
           onTaskClick={handleTaskClick}
+          totalCompleted={totalCompleted}
+          totalRequired={totalRequired}
         />
       </div>
 

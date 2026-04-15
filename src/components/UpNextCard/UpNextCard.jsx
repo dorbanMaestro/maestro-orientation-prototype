@@ -1,13 +1,13 @@
 // UpNextCard — "Up next" card highlighting current task
 // Matches Maestro production: bordered card (1px border), rounded corners
 // Layout: header row with icon + "Up next" label
-// Content row: rounded square icon | course code + name + subtitle | ghost "Continue" button
+// Content row: rounded square icon | week label + name + subtitle | ghost "Continue" button
+// UPDATED: new icons for 4-week structure, week label instead of ENROLL/ORIENT
 
 import {
   ClipboardList,
   Compass,
   BookOpen,
-  HandMetal,
   Users,
   PenLine,
   GraduationCap,
@@ -18,6 +18,11 @@ import {
   UserCircle,
   UsersRound,
   ListChecks,
+  MessageCircle,
+  LogIn,
+  Bot,
+  Flag,
+  HandMetal,
 } from 'lucide-react';
 
 // Map icon string names to lucide components
@@ -35,6 +40,10 @@ const iconMap = {
   'users-round': UsersRound,
   'list-checks': ListChecks,
   'clipboard-list': ClipboardList,
+  'message-circle': MessageCircle,
+  'log-in': LogIn,
+  bot: Bot,
+  flag: Flag,
 };
 
 /**
@@ -47,6 +56,9 @@ export default function UpNextCard({ task, onStart }) {
 
   const TaskIcon = iconMap[task.icon] || Compass;
   const buttonText = task.status === 'in_progress' ? 'Continue' : 'Start';
+
+  // Week label for orientation tasks, or "ENROLL" for enrollment tasks
+  const phaseLabel = task.week ? `WEEK ${task.week}` : (task.modalType ? 'ENROLL' : 'ORIENT');
 
   return (
     <div className="border border-border-default rounded-2xl bg-bg-surface p-6">
@@ -69,13 +81,13 @@ export default function UpNextCard({ task, onStart }) {
         <div className="flex-1 min-w-0">
           {/* Line 1: phase code (gray) + name (white bold) */}
           <div className="flex items-center gap-2">
-            <span className="text-sm text-text-tertiary">{task.modalType ? 'ENROLL' : 'ORIENT'}</span>
+            <span className="text-sm text-text-tertiary">{phaseLabel}</span>
             <span className="text-sm text-text-tertiary">·</span>
             <span className="text-sm font-semibold text-text-primary truncate">
               {task.name}
             </span>
           </div>
-          {/* Line 2: lesson info + description */}
+          {/* Line 2: goal description */}
           <p className="text-sm text-text-tertiary mt-1 truncate">
             {task.goal}
           </p>

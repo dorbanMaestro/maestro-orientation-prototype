@@ -1,11 +1,11 @@
 // WeekTabBar — Horizontal scrollable pill tabs for weeks/orientation
-// Matches Maestro production:
-// - Each tab is a rounded-full pill with padding
-// - Completed tabs: text + filled blue circle dot
-// - Current/active tab: text + empty circle outline, tab has white/light border
-// - Locked tabs: text + lock icon, text dimmed
+// Matches Maestro production layout:
+// - Orientation weeks: "Week -4", "Week -3", "Week -2", "Week -1"
+// - Separator: "Apr 28" marker for Day 1 (term start)
+// - Term weeks: "Week 1", "Week 2", "Week 3", etc.
+// - Status icons: filled dot (completed), empty circle (in_progress), lock (locked)
+// - Dashed connectors between pills
 // - Right arrow button for scrolling
-// - ~8px gaps between pills
 
 import { useRef } from 'react';
 import { Lock, ChevronRight } from 'lucide-react';
@@ -31,7 +31,10 @@ function StatusIcon({ status }) {
 
 /**
  * Horizontal scrollable tab bar with pill-shaped tabs.
- * @param {Array} tabs - Array of { id, label, status }
+ * Supports a special "separator" type tab that renders as a date marker
+ * between orientation and term weeks (matching Maestro production).
+ *
+ * @param {Array} tabs - Array of { id, label, status, type? }
  * @param {string} activeTab - Currently selected tab id
  * @param {function} onTabClick - Called with tab id when clicked
  */
@@ -53,12 +56,30 @@ export default function WeekTabBar({ tabs = [], activeTab, onTabClick }) {
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {tabs.map((tab, index) => {
+          // Separator element — renders as a small date badge between orientation and term
+          if (tab.type === 'separator') {
+            return (
+              <div key={tab.id} className="flex items-center shrink-0">
+                {/* Dashed connector leading into separator */}
+                {index > 0 && (
+                  <div className="w-4 border-t border-dashed border-border-default -mx-0.5" />
+                )}
+                {/* The separator badge — shows "Apr 28" with "Day 1" label */}
+                <div className="shrink-0 flex flex-col items-center px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
+                  <span className="text-[10px] font-medium text-primary leading-tight">Day 1</span>
+                  <span className="text-[11px] font-semibold text-primary leading-tight">{tab.label}</span>
+                </div>
+              </div>
+            );
+          }
+
+          // Regular week tab pill
           const isActive = tab.id === activeTab;
           const isLocked = tab.status === 'locked';
 
           return (
             <div key={tab.id} className="flex items-center shrink-0">
-              {/* Dashed connector line between tabs (production "timeline" style) */}
+              {/* Dashed connector line between tabs */}
               {index > 0 && (
                 <div className="w-4 border-t border-dashed border-border-default -mx-0.5" />
               )}
